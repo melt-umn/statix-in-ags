@@ -11,7 +11,9 @@ The artifact provided has the primary purpose of validating Theorem 2 of our
 paper. Namely, that the results of running Statix for a given specification and
 input program are consistent with the results we get on the same input progam,
 with the translation of that specification to a demand-driven attribute grammar.
-The artifact will, for a given Statix specification, translate that specification
+We have created a slightly modified version of Statix that includes
+some annotations to assist in the translation to attribute grammars.
+The artifact will, for one of these Statix specifications, translate that specification
 to; 1) an equivalent Ministatix specification, 2) an attribute grammar in our
 OCaml representation, 3) a Silver attribute grammar. It will then run a number 
 of input program test cases through each system, record the results of each,
@@ -26,17 +28,22 @@ reference attribute grammar language developed by our research group.
 Ministatix can be found here: https://github.com/metaborg/ministatix.hs,
 and Silver at: https://github.com/melt-umn/silver/.
 
+However, these tools are included in the Docker image and do not need to be 
+downloaded by the reviewer.
+
 If all results are consistent, then all tests pass. 
 Consistent results are defined by:
 
 - If the input program is satisfiable by Ministatix, then it is satisfiable by
-  both AG systems (case 1 of Theorem 2).
+  both AG systems (case 1 of Theorem 2). This indicates that the
+  program has no name-binding or type errors.
 
 - If the input program is unsatisfiable by Ministatix, then it is unsatisfiable
-  by both AG systems (cases 2/3 of Theorem 2).
+  by both AG systems (cases 2/3 of Theorem 2), indicating a static error.
 
 - If Ministatix becomes stuck during execution, then both AG systems abort with
-  a cycle detected (case 4 of Theorem 2).
+  a cycle detected (case 4 of Theorem 2). This is for specifications
+  that cannot be solved by either approach.
 
 Please note that each input test case directory in `specifications/testcases/lm`
 has a `README.md` outlining the expected results for that test case under each
@@ -102,6 +109,10 @@ The interesting artifact structure is outlined below.
         input term `Main.sv`. As well as these, a `README.md` describing the
         test case and expected results, and `concrete-syntax.lm` giving the
         concrete syntax of that test case.
+        **NOTE** that each of these files (`mstx.aterm`, `ag_test.ml`, `Main.sv`)
+        are formatted slightly differently to account for the three different
+        evaluation systems, however one should see that all of the abstract
+        syntax terms are equivalent for each testcase directory.
 
 - `statix_translate/`: The implementation of the translator of Statix 
   specifications in our syntax, to Ministatix specifications, OCaml attribute

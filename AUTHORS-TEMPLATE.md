@@ -79,6 +79,9 @@ reference attribute grammar language developed by our research group.
 Ministatix can be found here: https://github.com/metaborg/ministatix.hs,
 and Silver at: https://github.com/melt-umn/silver/.
 
+However, these tools are included in the Docker image and do not need to be 
+downloaded by the reviewer.
+
 If all results are consistent, then all tests pass. 
 Consistent results are defined by:
 
@@ -157,6 +160,10 @@ The interesting artifact structure is outlined below.
         input term `Main.sv`. As well as these, a `README.md` describing the
         test case and expected results, and `concrete-syntax.lm` giving the
         concrete syntax of that test case.
+        **NOTE** that each of these files (`mstx.aterm`, `ag_test.ml`, `Main.sv`)
+        are formatted slightly differently to account for the three different
+        evaluation systems, however one should see that all of the abstract
+        syntax terms are equivalent for each testcase directory.
 
 - `statix_translate/`: The implementation of the translator of Statix 
   specifications in our syntax, to Ministatix specifications, OCaml attribute
