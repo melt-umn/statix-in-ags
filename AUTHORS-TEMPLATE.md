@@ -53,10 +53,16 @@ naturally specified in reference attributes grammars.
 
 TODO - create the repo, link here.
 
+EVW: It isn't clear if they mean the GitHub repo you've just created
+or the zenodo DOI thing. Maybe list both?
+
 - Describe the structure of the artifact and provide a brief overview of the contents.
 
 TODO - this will be the same as the "Paper abstract and short artifact
 description" in the SLE HotCRP submission.
+
+EVW: you mean that the content below will also go into the SLE
+submission site?
 
 ### Description
 
@@ -64,21 +70,34 @@ The artifact provided has the primary purpose of validating Theorem 2 of our
 paper. Namely, that the results of running Statix for a given specification and
 input program are consistent with the results we get on the same input progam,
 with the translation of that specification to a demand-driven attribute grammar.
-The artifact will, for a given Statix specification, translate that specification
+We have created a slightly modified version of Statix that includes
+some annotations to assist in the translation to attribute grammars.
+The artifact will, for one of these Statix specifications, translate that specification
 to; 1) an equivalent Ministatix specification, 2) an attribute grammar in our
 OCaml representation, 3) a Silver attribute grammar. It will then run a number 
 of input program test cases through each system, record the results of each,
-and check whether those results are consistent. If all are consistent, then all 
+and check whether those results are consistent. 
+
+EVW: does the system check that they are consistent of does one just
+observe this? I don't see it in the output.
+
+EVW: say what MiniStatix is, say that the OCaml representation encodes
+the operational semantics given in the paper, say that Silver is a
+demand-driven attribute grammar system.
+
+If all are consistent, then all 
 tests pass. Consistent results are defined by:
 
 - If the input program is satisfiable by Ministatix, then it is satisfiable by
-  both AG systems (case 1 of Theorem 2).
+  both AG systems (case 1 of Theorem 2). This indicates that the
+  program has no name-binding or type errors.
 
 - If the input program is unsatisfiable by Ministatix, then it is unsatisfiable
-  by both AG systems (cases 2/3 of Theorem 2).
+  by both AG systems (cases 2/3 of Theorem 2), indicating a static error.
 
 - If Ministatix becomes stuck during execution, then both AG systems abort with
-  a cycle detected (case 4 of Theorem 2).
+  a cycle detected (case 4 of Theorem 2). This is for specifications
+  that cannot be solved by either approach.
 
 Please note that each input test case directory in `specifications/testcases/lm`
 has a `README.md` outlining the expected results for that test case under each
@@ -213,8 +232,10 @@ This section should provide a simple and quick way for the reviewer to check whe
 ### Steps to Perform a Quick Test
 1. **Setup Instructions:** Describe the minimal steps needed to set up the environment.
 
-   1. `docker load -i sle-2025-artifact.tar`: Loading the docker image stored in the tarball.
-   2. `docker run -ti TODO PASTE HASH HERE /bin/bash`: Logging into the image.
+   1. `docker load -i sle-2025-artifact.tar`: Loading the docker image
+      stored in the tarball. This will print out the hash of the image
+      to enter into the following command.
+   2. `docker run -ti TODO-PASTE-HASH-HERE /bin/bash`: Logging into the image.
 
 2. **Run a Sample Command:** Provide a single command or a few minimal commands that verify the artifact is working.
 
@@ -441,8 +462,12 @@ The OCaml AG evaluation is based on the small-step semantics we describe in the
 paper which may also take a few seconds to complete for a few of the test cases,
 due to our implementation of attribute grammar trees as lists.
 
-Note that this is not related the performance claims in the paper. In fact we 
-are moving that claim, based on reviewer comments to future work until we can 
+Note that this is not related the performance claims in the
+paper. That claim speculates that a proper attribute grammar system,
+not the OCaml code, may be more efficient than a Statix
+implementation. This claim is not substantiated in the paper and,
+based on reviewer comments, we are moving that comments to future work
+section as a hypothesis that needs to be tested until we can 
 gather real data.
   
 5. **Potential Issues:**
