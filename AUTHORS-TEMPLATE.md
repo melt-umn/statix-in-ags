@@ -49,20 +49,12 @@ naturally specified in reference attributes grammars.
 
 
 ## Documentation
+
 - **Link to the code repository:**
 
-TODO - create the repo, link here.
+Repo: https://github.com/melt-umn/statix-in-ags
 
-EVW: It isn't clear if they mean the GitHub repo you've just created
-or the zenodo DOI thing. Maybe list both?
-
-- Describe the structure of the artifact and provide a brief overview of the contents.
-
-TODO - this will be the same as the "Paper abstract and short artifact
-description" in the SLE HotCRP submission.
-
-EVW: you mean that the content below will also go into the SLE
-submission site?
+Zenodo DOI: 10.5281/zenodo.15272587
 
 ### Description
 
@@ -78,15 +70,17 @@ OCaml representation, 3) a Silver attribute grammar. It will then run a number
 of input program test cases through each system, record the results of each,
 and check whether those results are consistent. 
 
-EVW: does the system check that they are consistent of does one just
-observe this? I don't see it in the output.
+Ministatix is a playground implementation of Statix, introduced as an artifact
+of Knowing When to Ask (Rouvoet et al.). The OCaml AG representation encodes
+an attribute grammar system defined by the demand-driven operational semantics
+defined in the paper. On the other hand, Silver is an established demand-driven
+reference attribute grammar language developed by our research group.
 
-EVW: say what MiniStatix is, say that the OCaml representation encodes
-the operational semantics given in the paper, say that Silver is a
-demand-driven attribute grammar system.
+Ministatix can be found here: https://github.com/metaborg/ministatix.hs,
+and Silver at: https://github.com/melt-umn/silver/.
 
-If all are consistent, then all 
-tests pass. Consistent results are defined by:
+If all results are consistent, then all tests pass. 
+Consistent results are defined by:
 
 - If the input program is satisfiable by Ministatix, then it is satisfiable by
   both AG systems (case 1 of Theorem 2). This indicates that the
@@ -268,97 +262,141 @@ input program test case in `specifications/testcases/lm`, a consistent result fo
 each of the three evaluation systems we provide (Ministatix/OCaml AG/Silver AG). 
 The results should reproduce the following:
 
-- Under specification `lm-rec.mstx`
-   1. For test case `specifications/testcases/lm/bad_module_simple_add`:
-      - `Unsatisfiable by Ministatix`
-      - `Unsatisfiable by OCaml AG (outer.ok == false)`
-      - `Unsatisfiable by Silver AG (outer.ok == false)`
-   2. For test case `specifications/testcases/lm/bad_simple_add`:
-      - `Unsatisfiable by Ministatix`
-      - `Unsatisfiable by OCaml AG (outer.ok == false)`
-      - `Unsatisfiable by Silver AG (outer.ok == false)`
-   3. For test case `specifications/testcases/lm/imp_par_not_seq`:
-      - `Stuck in Ministatix`
-      - `Cycle detected by OCaml AG`
-      - `Cycle detected by Silver AG`
-   4. For test case `specifications/testcases/lm/module_simple_add`:
-      - `Satisfiable by Ministatix`
-      - `Satisfiable by OCaml AG`
-      - `Satisfiable by Silver AG`
-   5. For test case `specifications/testcases/lm/nores_let`:
-      - `Unsatisfiable by Ministatix`
-      - `Unsatisfiable by OCaml AG (evaluation aborted)`
-      - `Unsatisfiable by Silver AG (evaluation aborted)`
-   6. For test case `specifications/testcases/lm/one_import`:
-      - `Stuck in Ministatix`
-      - `Cycle detected by OCaml AG`
-      - `Cycle detected by Silver AG`
-   7. For test case `specifications/testcases/lm/simple_add`:
-      - `Satisfiable by Ministatix`
-      - `Satisfiable by OCaml AG`
-      - `Satisfiable by Silver AG`
+```
+test-one-spec: Translating specification specifications/lm-rec.mstx...
+test-one-spec: Running tests in specifications/testcases/lm...
+try-all-inputs: Found 7 tests to run.
+try-all-inputs: [1/7] Running test case specifications/testcases/lm/bad_module_simple_add/...
+- Unsatisfiable by Ministatix
+- Unsatisfiable by OCaml AG (outer.ok == false)
+- Unsatisfiable by Silver AG (outer.ok == false)
+- Success - Test results are matching.
+try-all-inputs: [2/7] Running test case specifications/testcases/lm/bad_simple_add/...
+- Unsatisfiable by Ministatix
+- Unsatisfiable by OCaml AG (outer.ok == false)
+- Unsatisfiable by Silver AG (outer.ok == false)
+- Success - Test results are matching.
+try-all-inputs: [3/7] Running test case specifications/testcases/lm/imp_par_not_seq/...
+- Stuck in Ministatix
+- Cycle detected OCaml AG
+- Cycle detected Silver AG
+- Success - Test results are matching.
+try-all-inputs: [4/7] Running test case specifications/testcases/lm/module_simple_add/...
+- Satisfiable by Ministatix
+- Satisfiable by OCaml AG
+- Satisfiable by Silver AG
+- Success - Test results are matching.
+try-all-inputs: [5/7] Running test case specifications/testcases/lm/nores_let/...
+- Unsatisfiable by Ministatix
+- Unsatisfiable by OCaml AG (evaluation aborted)
+- Unsatisfiable by Silver AG (evaluation aborted)
+- Success - Test results are matching.
+try-all-inputs: [6/7] Running test case specifications/testcases/lm/one_import/...
+- Stuck in Ministatix
+- Cycle detected OCaml AG
+- Cycle detected Silver AG
+- Success - Test results are matching.
+try-all-inputs: [7/7] Running test case specifications/testcases/lm/simple_add/...
+- Satisfiable by Ministatix
+- Satisfiable by OCaml AG
+- Satisfiable by Silver AG
+- Success - Test results are matching.
+try-all-inputs: [7/7] Test cases passed, [0/7] failed.
+try-all-inputs: Done.
+test-one-spec: Done running tests.
+test-one-spec: Cleaning up.
+test-one-spec: Done.
+---
+test-one-spec: Translating specification specifications/lm-par.mstx...
+test-one-spec: Running tests in specifications/testcases/lm...
+try-all-inputs: Found 7 tests to run.
+try-all-inputs: [1/7] Running test case specifications/testcases/lm/bad_module_simple_add/...
+- Unsatisfiable by Ministatix
+- Unsatisfiable by OCaml AG (outer.ok == false)
+- Unsatisfiable by Silver AG (outer.ok == false)
+- Success - Test results are matching.
+try-all-inputs: [2/7] Running test case specifications/testcases/lm/bad_simple_add/...
+- Unsatisfiable by Ministatix
+- Unsatisfiable by OCaml AG (outer.ok == false)
+- Unsatisfiable by Silver AG (outer.ok == false)
+- Success - Test results are matching.
+try-all-inputs: [3/7] Running test case specifications/testcases/lm/imp_par_not_seq/...
+- Satisfiable by Ministatix
+- Satisfiable by OCaml AG
+- Satisfiable by Silver AG
+- Success - Test results are matching.
+try-all-inputs: [4/7] Running test case specifications/testcases/lm/module_simple_add/...
+- Satisfiable by Ministatix
+- Satisfiable by OCaml AG
+- Satisfiable by Silver AG
+- Success - Test results are matching.
+try-all-inputs: [5/7] Running test case specifications/testcases/lm/nores_let/...
+- Unsatisfiable by Ministatix
+- Unsatisfiable by OCaml AG (evaluation aborted)
+- Unsatisfiable by Silver AG (evaluation aborted)
+- Success - Test results are matching.
+try-all-inputs: [6/7] Running test case specifications/testcases/lm/one_import/...
+- Satisfiable by Ministatix
+- Satisfiable by OCaml AG
+- Satisfiable by Silver AG
+- Success - Test results are matching.
+try-all-inputs: [7/7] Running test case specifications/testcases/lm/simple_add/...
+- Satisfiable by Ministatix
+- Satisfiable by OCaml AG
+- Satisfiable by Silver AG
+- Success - Test results are matching.
+try-all-inputs: [7/7] Test cases passed, [0/7] failed.
+try-all-inputs: Done.
+test-one-spec: Done running tests.
+test-one-spec: Cleaning up.
+test-one-spec: Done.
+---
+test-one-spec: Translating specification specifications/lm-seq.mstx...
+test-one-spec: Running tests in specifications/testcases/lm...
+try-all-inputs: Found 7 tests to run.
+try-all-inputs: [1/7] Running test case specifications/testcases/lm/bad_module_simple_add/...
+- Unsatisfiable by Ministatix
+- Unsatisfiable by OCaml AG (outer.ok == false)
+- Unsatisfiable by Silver AG (outer.ok == false)
+- Success - Test results are matching.
+try-all-inputs: [2/7] Running test case specifications/testcases/lm/bad_simple_add/...
+- Unsatisfiable by Ministatix
+- Unsatisfiable by OCaml AG (outer.ok == false)
+- Unsatisfiable by Silver AG (outer.ok == false)
+- Success - Test results are matching.
+try-all-inputs: [3/7] Running test case specifications/testcases/lm/imp_par_not_seq/...
+- Unsatisfiable by Ministatix
+- Unsatisfiable by OCaml AG (outer.ok == false)
+- Unsatisfiable by Silver AG (outer.ok == false)
+- Success - Test results are matching.
+try-all-inputs: [4/7] Running test case specifications/testcases/lm/module_simple_add/...
+- Satisfiable by Ministatix
+- Satisfiable by OCaml AG
+- Satisfiable by Silver AG
+- Success - Test results are matching.
+try-all-inputs: [5/7] Running test case specifications/testcases/lm/nores_let/...
+- Unsatisfiable by Ministatix
+- Unsatisfiable by OCaml AG (evaluation aborted)
+- Unsatisfiable by Silver AG (evaluation aborted)
+- Success - Test results are matching.
+try-all-inputs: [6/7] Running test case specifications/testcases/lm/one_import/...
+- Satisfiable by Ministatix
+- Satisfiable by OCaml AG
+- Satisfiable by Silver AG
+- Success - Test results are matching.
+try-all-inputs: [7/7] Running test case specifications/testcases/lm/simple_add/...
+- Satisfiable by Ministatix
+- Satisfiable by OCaml AG
+- Satisfiable by Silver AG
+- Success - Test results are matching.
+try-all-inputs: [7/7] Test cases passed, [0/7] failed.
+try-all-inputs: Done.
+test-one-spec: Done running tests.
+test-one-spec: Cleaning up.
+test-one-spec: Done.
+```
 
-- Under specification `lm-par.mstx`
-   1. For test case `specifications/testcases/lm/bad_module_simple_add`:
-      - `Unsatisfiable by Ministatix`
-      - `Unsatisfiable by OCaml AG (outer.ok == false)`
-      - `Unsatisfiable by Silver AG (outer.ok == false)`
-   2. For test case `specifications/testcases/lm/bad_simple_add`:
-      - `Unsatisfiable by Ministatix`
-      - `Unsatisfiable by OCaml AG (outer.ok == false)`
-      - `Unsatisfiable by Silver AG (outer.ok == false)`
-   3. For test case `specifications/testcases/lm/imp_par_not_seq`:
-      - `Satisfiable by Ministatix`
-      - `Satisfiable by OCaml AG`
-      - `Satisfiable by Silver AG`
-   4. For test case `specifications/testcases/lm/module_simple_add`:
-      - `Satisfiable by Ministatix`
-      - `Satisfiable by OCaml AG`
-      - `Satisfiable by Silver AG`
-   5. For test case `specifications/testcases/lm/nores_let`:
-      - `Unsatisfiable by Ministatix`
-      - `Unsatisfiable by OCaml AG (evaluation aborted)`
-      - `Unsatisfiable by Silver AG (evaluation aborted)`
-   6. For test case `specifications/testcases/lm/one_import`:
-      - `Satisfiable by Ministatix`
-      - `Satisfiable by OCaml AG`
-      - `Satisfiable by Silver AG`
-   7. For test case `specifications/testcases/lm/simple_add`:
-      - `Satisfiable by Ministatix`
-      - `Satisfiable by OCaml AG`
-      - `Satisfiable by Silver AG`
-
-- Under specification `lm-seq.mstx`
-   1. For test case `specifications/testcases/lm/bad_module_simple_add`:
-      - `Unsatisfiable by Ministatix`
-      - `Unsatisfiable by OCaml AG (outer.ok == false)`
-      - `Unsatisfiable by Silver AG (outer.ok == false)`
-   2. For test case `specifications/testcases/lm/bad_simple_add`:
-      - `Unsatisfiable by Ministatix`
-      - `Unsatisfiable by OCaml AG (outer.ok == false)`
-      - `Unsatisfiable by Silver AG (outer.ok == false)`
-   3. For test case `specifications/testcases/lm/imp_par_not_seq`:
-      - `Unsatisfiable by Ministatix`
-      - `Unsatisfiable by OCaml AG (outer.ok == false)`
-      - `Unsatisfiable by Silver AG (outer.ok == false)`
-   4. For test case `specifications/testcases/lm/module_simple_add`:
-      - `Satisfiable by Ministatix`
-      - `Satisfiable by OCaml AG`
-      - `Satisfiable by Silver AG`
-   5. For test case `specifications/testcases/lm/nores_let`:
-      - `Unsatisfiable by Ministatix`
-      - `Unsatisfiable by OCaml AG (evaluation aborted)`
-      - `Unsatisfiable by Silver AG (evaluation aborted)`
-   6. For test case `specifications/testcases/lm/one_import`:
-      - `Satisfiable by Ministatix`
-      - `Satisfiable by OCaml AG`
-      - `Satisfiable by Silver AG`
-   7. For test case `specifications/testcases/lm/simple_add`:
-      - `Satisfiable by Ministatix`
-      - `Satisfiable by OCaml AG`
-      - `Satisfiable by Silver AG`
-
-4. **Troubleshooting:** List common issues and their possible solutions if the setup fails.
+4. **Troubleshooting:**
 
 No known issues.
 

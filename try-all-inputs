@@ -26,7 +26,6 @@ for testcase in $1/*/ ; do
     bash try-one-input $testcase
     RES=$?
     FAILED=$(($FAILED + $RES))
-    break
 done
 
 PASSED=$(($TESTN-$FAILED))
