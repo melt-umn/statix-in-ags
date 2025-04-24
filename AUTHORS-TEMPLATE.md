@@ -236,7 +236,7 @@ This section should provide a simple and quick way for the reviewer to check whe
    1. `docker load -i sle-2025-artifact.tar`: Loading the docker image
       stored in the tarball. This will print out the hash of the image
       to enter into the following command.
-   2. `docker run -ti TODO-PASTE-HASH-HERE /bin/bash`: Logging into the image.
+   2. `docker run -ti b37b287c686e /bin/bash`: Logging into the image.
 
 2. **Run a Sample Command:** Provide a single command or a few minimal commands that verify the artifact is working.
 
