@@ -15,8 +15,19 @@ The artifact will, for a given Statix specification, translate that specificatio
 to; 1) an equivalent Ministatix specification, 2) an attribute grammar in our
 OCaml representation, 3) a Silver attribute grammar. It will then run a number 
 of input program test cases through each system, record the results of each,
-and check whether those results are consistent. If all are consistent, then all 
-tests pass. Consistent results are defined by:
+and check whether those results are consistent. 
+
+Ministatix is a playground implementation of Statix, introduced as an artifact
+of Knowing When to Ask (Rouvoet et al.). The OCaml AG representation encodes
+an attribute grammar system defined by the demand-driven operational semantics
+defined in the paper. On the other hand, Silver is an established demand-driven
+reference attribute grammar language developed by our research group.
+
+Ministatix can be found here: https://github.com/metaborg/ministatix.hs,
+and Silver at: https://github.com/melt-umn/silver/.
+
+If all results are consistent, then all tests pass. 
+Consistent results are defined by:
 
 - If the input program is satisfiable by Ministatix, then it is satisfiable by
   both AG systems (case 1 of Theorem 2).
